@@ -2513,6 +2513,7 @@ class Trainer:
                 num_batches = args.gradient_accumulation_steps if update_step != (total_updates - 1) else remainder
                 batch_samples, num_items_in_batch = self.get_batch_samples(epoch_iterator, num_batches)
                 for i, inputs in enumerate(batch_samples):
+                    print("YAYA train loop inputs", inputs["pixel_values"].shape)
                     step += 1
                     do_sync_step = (step + 1) % args.gradient_accumulation_steps == 0 or (step + 1) == steps_in_epoch
                     # Since we perform prefetching, we need to manually set sync_gradients
@@ -2558,6 +2559,7 @@ class Trainer:
                         and self.accelerator.distributed_type != DistributedType.DEEPSPEED
                         else contextlib.nullcontext
                     )
+                    print("YAYA num_items_in_batch", num_items_in_batch)
                     with context():
                         tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
 

@@ -1319,6 +1319,7 @@ class Gemma3ForConditionalGeneration(Gemma3PreTrainedModel, GenerationMixin):
         # Merge text and images
         if pixel_values is not None:
             print("GEMMA3 pixel_values", pixel_values.shape)
+            pixel_values = pixel_values.squeeze(0)
             image_features = self.get_image_features(pixel_values)
             print("GEMMA3 image_features", image_features.shape)
 
